@@ -8,11 +8,16 @@ const conversor = require('./convert')
 const bodyParser = require('body-parser');
 const config = require('./config/system-life');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(config.middlewares.healthMid);
 app.use('/', config.routers);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('view engine', 'ejs');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
+
+const PORT = 8080;
 
 app.get('/fahrenheit/:valor/celsius', (req, res) => {
 
@@ -47,6 +52,6 @@ app.post('/', (req, res) => {
     res.render('index', {valorConvertido: resultado});
  });
 
-app.listen(8080, () => {
-    console.log("Servidor rodando na porta 8080");
+app.listen((process.env.API_PORT | PORT), () => {
+    console.log(`Servidor rodando na porta ${process.env.API_LOCAL_PORT | PORT}`);
 });

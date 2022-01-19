@@ -1,0 +1,1 @@
+docker-compose -p ini-kub-prod-stack -f docker-compose-prod.yaml up -d
